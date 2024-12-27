@@ -31,4 +31,3 @@ def consume_from_kafka():
 
 if __name__ == "__main__":
     consume_from_kafka()
-#consumer.py in consumer
