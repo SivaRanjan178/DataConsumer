@@ -1,7 +1,0 @@
-# hackathon/Kafka_properties/kafka_config.py
-
-KAFKA_BOOTSTRAP_SERVERS = 'localhost:9092'
-KAFKA_SECURITY_PROTOCOL = 'PLAINTEXT'
-KAFKA_SASL_MECHANISM = 'PLAIN'
-KAFKA_SASL_USERNAME = 'Hacakthon'
-KAFKA_SASL_PASSWORD = '1234'

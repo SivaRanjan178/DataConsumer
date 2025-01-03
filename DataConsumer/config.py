@@ -2,7 +2,7 @@ import redis
 import os
 
 redis_client = redis.StrictRedis(
-    host=os.getenv('REDIS_HOST', 'localhost'),  # Default to 'localhost'
+    host=os.getenv('REDIS_HOST', 'redis.finvedic.in'),  # Default to 'localhost'
     port=6379,
     db=0
 )

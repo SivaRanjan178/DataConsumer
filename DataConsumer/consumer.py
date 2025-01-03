@@ -1,10 +1,10 @@
+import redis
 from kafka import KafkaConsumer
-from redis import StrictRedis
 import json
 
 # Connect to Redis
-redis_client = StrictRedis(
-    host='localhost',
+redis_client = redis.StrictRedis(
+    host='redis.finvedic.in',
     port=6379,
     db=0
 )
@@ -23,11 +23,16 @@ def consume_from_kafka():
         data = message.value
         print(f"Received data: {data}")  # Debug: Print received data
 
-        if 'key' in data and 'value' in data:
-            redis_client.set(data['key'], data['value'])
-            print(f"Data saved to Redis: key={data['key']}, value={data['value']}")  # Debug: Data saved to Redis
-        else:
-            print("Received data does not contain 'key' and 'value' fields")
+        try:
+            # Use default key and serialize value
+            key = data.get('key', f"auto_key_{message.offset}")
+            value = json.dumps(data.get('value', data))  # Serialize value to JSON
+
+            # Save to Redis
+            redis_client.set(key, value)
+            print(f"Data saved to Redis: key={key}, value={value}")  # Debug: Data saved to Redis
+        except Exception as e:
+            print(f"Failed to save data to Redis: {e}")
 
 if __name__ == "__main__":
     consume_from_kafka()
